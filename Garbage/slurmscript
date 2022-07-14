@@ -1,0 +1,11 @@
+#!/bin/bash
+#SBATCH --account=pschelling
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=1
+#SBATCH --time=1:00:00
+#SBATCH --error=error-%J.err
+#SBATCH --output=results-%J.out
+#SBATCH --job-name=conduct
+#SBATCH --mem=16000
+echo "Slurm nodes assigned :$SLURM_JOB_NODELIST"
+mpirun /home/pschelling/superKPM/espace/src/espace_mpi.exe > run.out

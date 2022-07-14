@@ -1,0 +1,13 @@
+65536	! Number of time steps
+1000.0		! Max time 
+1300	! NT largest order in the Chebyshev expansion
+-672		! iseed seed for the random potential sequence
+j           ! kernel choice of kernel (j=Jackson, l=Lorentz, d=Dirichlet)
+1.0		! lambda Lorentz kernel parameter
+p p h	! boundary choice of boundary conditions (p=periodic, h=hard wall) along x, y, z 
+1            ! Number of random states for truncated basis approximation
+5.0         ! Emax, highest possible energy
+-5.0          ! Emin, lowest possible energy
+2000         ! Number of energy steps
+-0.9         ! epsmin Minimum for normalized energy range
+0.9         ! epsmax Maximum for normalized energy range
