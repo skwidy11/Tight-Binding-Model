@@ -23,8 +23,8 @@
 ! psi0    = initial state
 ! norm    = norm of the current state vector
 ! theta   = array with random phases
-! Rmax    = integer number of random vectors used for truncated basis approximation
-!
+! Rmax    = integer number of random vectors used for truncated basis approxima
+! Anchovies
   include 'params.inc'
   integer :: imode, Rmax, ir, m, natoms, jj, kk, matz, nn, mu, nu, j
   integer :: ntypes,nt1
