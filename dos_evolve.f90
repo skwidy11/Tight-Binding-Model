@@ -60,7 +60,7 @@
   double precision, dimension(4,9) :: eps
   double precision, dimension(4,4,9,9) :: t, delta
 
-  complex, dimension(20,20) :: band_mat
+  complex, dimension(12,12) :: band_mat
   real, allocatable :: eig(:), rwork(:)
   complex, allocatable :: work(:)
   double precision :: kx,ky
@@ -92,7 +92,7 @@
   vol=vol*a**3 ! System volume, A**3
   print *, "p =", p
   print *, "vol", vol
-  numstates = natoms + natoms*2/3
+  numstates = natoms
 
 
 
@@ -111,7 +111,7 @@
 ! Total number of sites
 
   ND=natoms
-! Set oxygen and copper atom to look at\
+! Set oxygen and copper atom to look at
 
 
  call input_super(ND, norb, NT, Ntau, KT, time_max, iseed, &
@@ -148,7 +148,7 @@
   allocate(eigup(numstates),eigdown(numstates))
   allocate(nocc(numstates,2))
 
-!  allocate  (mu_n(0:KT-1,0:NT-1))
+
   nocc = 0.0d0
   open(unit=43,file='Occup.dat')
   open(unit=47,file='AntiF.dat')
@@ -174,16 +174,13 @@
   !U = 3.0d0
   print *, "U = ", U
   threshold = 5*10d0**(-2)
-  num_elec = 9*natoms/3
-!  do while (fermi.le.3.26d0)
-!  fermi = fermi + 0.25d0
+  num_elec = 2*numstates - numstates/3
   nocc_dev_up = 1
-  do j = 1, numstates ! Initialize anti-ferro state
-    !if (ntype(mod(j-1,numstates) + 1).eq.1.or.ntype(mod(j-1,numstates) + 1).eq.3) then
-    if (ntype(j).eq.1.or.ntype(j).eq.3) then
+  do j = 1, numstates ! Initialize anti-ferro State
+    if (ntype(j).eq.1.or.ntype(j).eq.3) then ! The coppers
       n = j-natoms*2/3
       k = (n-1) / h(1,1)
-       if (mod(n+k,2).eq.0) then! May need to update if lattice size changes.
+      if (mod(n+k,2).eq.0) then! May need to update if lattice size changes.
 !        Antiferromagnetic
         !nocc(j,1) = 1.0d0
         !nocc(j,2) = 0.0d0
@@ -263,16 +260,16 @@
   fermi = eigup(num_elec/2)
 
   call dos2(eigup,eigdown,hmatup,ntype,num_elec,numstates,ND)
-  ! Calculate square deviation
-  open(unit=81,file='dos.dat')
-  open(unit=82,file='dossy.dat')
-  rsquare=0.0d0
-  do i=1,160
-    read(81,*) energy,dummy,dos_me1,dos_me2
-    read(82,*) energy,dos_their1,dos_their2
-    rsquare = rsquare + (dos_me1-2*dos_their1)**2 + (dos_me2-2*dos_their2)**2
-  end do
-  print *, "Rsquare = ", rsquare
+!  Calculate square deviation
+!  open(unit=81,file='dos.dat')
+!  open(unit=82,file='dossy.dat')
+!  rsquare=0.0d0
+!  do i=1,160
+!    read(81,*) energy,dummy,dos_me1,dos_me2
+!    read(82,*) energy,dos_their1,dos_their2
+!    rsquare = rsquare + (dos_me1-2*dos_their1)**2 + (dos_me2-2*dos_their2)**2
+!  end do
+!  print *, "Rsquare = ", rsquare
 
   do i=1 , ND
     spin = 0.0d0
@@ -294,7 +291,7 @@
   lwork = 660
   cells = 30
   site = a_cu_site ! Chooses a copper site
-  allocate(eig(20),work(lwork),rwork(3*20-2))
+  allocate(eig(12),work(lwork),rwork(3*12-2))
   n=0
 ! Cheev get's eigenvalues of complex hermitian matrix
 ! Update_band_AF updates the band matrix (using antiferromagnetic zone)
@@ -304,11 +301,10 @@
     ky = 0d0
     call update_band_AF(kx,ky,band_mat,t,eps,nocc,site,U,numstates)
     n=n+1
-    call cheev('N','U',20,band_mat,20,eig,work,lwork,rwork,info)
+    call cheev('N','U',12,band_mat,12,eig,work,lwork,rwork,info)
     write(11,*) n,kx,ky,eig(1)-fermi,eig(2)-fermi,eig(3)-fermi,eig(4)-fermi,eig(5)-fermi,&
           eig(6)-fermi,eig(7)-fermi,eig(8)-fermi,eig(9)-fermi,eig(10)-fermi,eig(11)-fermi,&
-          eig(12)-fermi,eig(13)-fermi,eig(14)-fermi,eig(15)-fermi,eig(16)-fermi,eig(17)-fermi,&
-          eig(18)-fermi,eig(19)-fermi,eig(20)-fermi
+          eig(12)-fermi
   end do
 
 ! X to M
@@ -321,11 +317,10 @@
     ky = pi*dble(j)/dble(cells)
     n=n+1
     call update_band_AF(kx,ky,band_mat,t,eps,nocc,site,U,numstates)
-    call cheev('N','U',20,band_mat,20,eig,work,lwork,rwork,info)
+    call cheev('N','U',12,band_mat,12,eig,work,lwork,rwork,info)
     write(11,*) n,kx,ky,eig(1)-fermi,eig(2)-fermi,eig(3)-fermi,eig(4)-fermi,eig(5)-fermi,&
           eig(6)-fermi,eig(7)-fermi,eig(8)-fermi,eig(9)-fermi,eig(10)-fermi,eig(11)-fermi,&
-          eig(12)-fermi,eig(13)-fermi,eig(14)-fermi,eig(15)-fermi,eig(16)-fermi,eig(17)-fermi,&
-          eig(18)-fermi,eig(19)-fermi,eig(20)-fermi
+          eig(12)-fermi
   end do
 
 ! M to Gamma
@@ -338,11 +333,10 @@
     ky = pi/2 - pi*dble(j)/dble(2*cells)
     n=n+1
     call update_band_AF(kx,ky,band_mat,t,eps,nocc,site,U,numstates)
-    call cheev('N','U',20,band_mat,20,eig,work,lwork,rwork,info)
+    call cheev('N','U',12,band_mat,12,eig,work,lwork,rwork,info)
     write(11,*) n,kx,ky,eig(1)-fermi,eig(2)-fermi,eig(3)-fermi,eig(4)-fermi,eig(5)-fermi,&
           eig(6)-fermi,eig(7)-fermi,eig(8)-fermi,eig(9)-fermi,eig(10)-fermi,eig(11)-fermi,&
-          eig(12)-fermi,eig(13)-fermi,eig(14)-fermi,eig(15)-fermi,eig(16)-fermi,eig(17)-fermi,&
-          eig(18)-fermi,eig(19)-fermi,eig(20)-fermi
+          eig(12)-fermi
   end do
   ! *************************************************************************
 
@@ -365,17 +359,16 @@
       kx = pi*dble(ikx)/dble(cells) !this is k / 2 actually.
       ky = pi*dble(iky)/dble(cells)
       call update_band_AF(kx,ky,band_mat,t,eps,nocc,site,U,numstates)
-      call cheev('N','U',20,band_mat,20,eig,work,lwork,rwork,info)
+      call cheev('N','U',12,band_mat,12,eig,work,lwork,rwork,info)
       write(34,*) n,kx,ky,eig(1)-fermi,eig(2)-fermi,eig(3)-fermi,eig(4)-fermi,eig(5)-fermi,&
             eig(6)-fermi,eig(7)-fermi,eig(8)-fermi,eig(9)-fermi,eig(10)-fermi,eig(11)-fermi,&
-            eig(12)-fermi,eig(13)-fermi,eig(14)-fermi,eig(15)-fermi,eig(16)-fermi,eig(17)-fermi,&
-            eig(18)-fermi,eig(19)-fermi,eig(20)-fermi
+            eig(12)-fermi
       n=n+1
 
       do ien=1,runs
         emin=emin+delta_sc
         emax=emax+delta_sc
-        do i=1,20
+        do i=1,12
           if(eig(i).gt.emin.and.eig(i).le.emax) doso(ien)=doso(ien)+1.
         enddo
       enddo ! ien

@@ -111,22 +111,22 @@ subroutine spectral_weight(ef,eigup,eigdown,hmatup,hmatdown,sx,sy,numstates,ND,n
         enddo ! icc
 
         !Vertical Oxygen, not towards Cu
-        do icc=1,icount ! icc for eigenvectors(up)
-          costrans = 0.0d0
-          sintrans = 0.0d0
-         do il=ND+1,numstates
-           pos = mod(il-1,ND)+1
-           if(ntype(il)==2.and.floor(sy(pos))-sy(pos)<-0.3.and.floor(sy(pos))-sy(pos)>-0.75) then
-             phasearg=(sx(pos)*fkx+sy(pos)*fky)
-             wave=wavenearfs(icc,il)
+        !do icc=1,icount ! icc for eigenvectors(up)
+        !  costrans = 0.0d0
+        !  sintrans = 0.0d0
+        ! do il=ND+1,numstates
+        !   pos = mod(il-1,ND)+1
+        !   if(ntype(il)==2.and.floor(sy(pos))-sy(pos)<-0.3.and.floor(sy(pos))-sy(pos)>-0.75) then
+        !     phasearg=(sx(pos)*fkx+sy(pos)*fky)
+        !     wave=wavenearfs(icc,il)
 
-             costrans=costrans+wave*dcos(phasearg)
-             sintrans=sintrans+wave*dsin(phasearg)
-           end if
-         enddo ! il
-         overlap=costrans**2+sintrans**2
-         weight(ikx,iky)=weight(ikx,iky)+overlap
-        enddo ! icc
+        !     costrans=costrans+wave*dcos(phasearg)
+        !     sintrans=sintrans+wave*dsin(phasearg)
+        !   end if
+        ! enddo ! il
+        ! overlap=costrans**2+sintrans**2
+        ! weight(ikx,iky)=weight(ikx,iky)+overlap
+        !enddo ! icc
 
 
         !Horizontal Oxygen, towards Cu
@@ -152,22 +152,22 @@ subroutine spectral_weight(ef,eigup,eigdown,hmatup,hmatdown,sx,sy,numstates,ND,n
         !Horizontal Oxygen, not towards Cu
         !costrans = 0.0d0
         !sintrans = 0.0d0
-        do icc=1,icount ! icc for eigenvectors(up)
-          costrans = 0.0d0
-          sintrans = 0.0d0
-         do il=ND+1,numstates
-           pos = mod(il-1,ND)+1
-           if(ntype(il)==2.and.floor(sx(pos))-sx(pos)<-0.3.and.floor(sx(pos))-sx(pos)>-0.75) then
-             phasearg=(sx(pos)*fkx+sy(pos)*fky)
-             wave=wavenearfs(icc,il)
+        !do icc=1,icount ! icc for eigenvectors(up)
+        !  costrans = 0.0d0
+        !  sintrans = 0.0d0
+        ! do il=ND+1,numstates
+        !   pos = mod(il-1,ND)+1
+        !   if(ntype(il)==2.and.floor(sx(pos))-sx(pos)<-0.3.and.floor(sx(pos))-sx(pos)>-0.75) then
+        !     phasearg=(sx(pos)*fkx+sy(pos)*fky)
+        !     wave=wavenearfs(icc,il)
 
-             costrans=costrans+wave*dcos(phasearg)
-             sintrans=sintrans+wave*dsin(phasearg)
-           end if
-         enddo ! il
-         overlap=costrans**2+sintrans**2
-         weight(ikx,iky)=weight(ikx,iky)+overlap
-        enddo ! icc
+        !     costrans=costrans+wave*dcos(phasearg)
+        !     sintrans=sintrans+wave*dsin(phasearg)
+        !   end if
+        ! enddo ! il
+        ! overlap=costrans**2+sintrans**2
+        ! weight(ikx,iky)=weight(ikx,iky)+overlap
+        !enddo ! icc
         !overlap=costrans**2+sintrans**2
         !weight(ikx,iky)=weight(ikx,iky)+overlap
 

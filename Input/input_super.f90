@@ -25,55 +25,54 @@
   integer :: m,n,natoms,i,j,norb,Rmax,nesteps, ntypes
   integer :: mu, nu
 
-  if(.true.) then
-        open(unit=11,file='Input/input_super.dat') ! control parameters
-        open(unit=14,file='Input/potent.txt') ! tight-binding parameters
+  t = 0.0
+  open(unit=11,file='Input/input_super.dat') ! control parameters
+  open(unit=14,file='Input/potent.txt') ! tight-binding parameters
 
-        write(6,*) 'reading tight-binding potential parameters'
+  write(6,*) 'reading tight-binding potential parameters'
 ! Read tight-binding parameters
 !
-        read(14,*)
-        write(6,*) 'through first line'
-        read(14,*) ntypes,norb
-        write(6,*) 'ntypes,norb=',ntypes,norb
-        read(14,*)
-                do n=1,ntypes
-                        read(14,*) (eps(n,mu),mu=1,norb)
-                enddo
-                read(14,*) U
-                write(6,*) 'diagonal energies from input file'
-                write(6,*) eps(1,1),eps(1,2),eps(1,3)
-                write(6,*) eps(2,1),eps(2,2),eps(2,3)
-                write(6,*) eps(3,1),eps(3,2),eps(3,3)
-                write(6,*) eps(4,1),eps(4,2),eps(4,3)
-                do n=1,ntypes
-                do m=n,ntypes
-                        read(14,*)
-                        read(14,*)
-                        do mu=1,norb
-                           read(14,*) (t(n,m,mu,nu),nu=1,norb)
-                        enddo
-                        write(6,*) t(n,m,1,1),t(n,m,1,2),t(n,m,1,3)
-                        write(6,*) t(n,m,2,1),t(n,m,2,2),t(n,m,2,3)
-                        write(6,*) t(n,m,3,1),t(n,m,3,2),t(n,m,3,3)
-                        read(14,*)
-                        do mu=1,norb
-                           read(14,*) (delta(n,m,mu,nu),nu=1,norb)
-                        enddo
-                        read(14,*)
-                enddo
-                enddo
-  endif
+  read(14,*)
+  write(6,*) 'through first line'
+  read(14,*) ntypes,norb
+  write(6,*) 'ntypes,norb=',ntypes,norb
+  read(14,*)
+  do n=1,ntypes
+    read(14,*) (eps(n,mu),mu=1,norb)
+  enddo
+  read(14,*) U
+  write(6,*) 'diagonal energies from input file'
+  write(6,*) eps(1,1),eps(1,2)!,eps(1,3)
+  write(6,*) eps(2,1),eps(2,2)!,eps(2,3)
+  write(6,*) eps(3,1),eps(3,2)!,eps(3,3)
+  write(6,*) eps(4,1),eps(4,2)!,eps(4,3)
+  do n=1,ntypes
+  do m=n,ntypes
+    read(14,*)
+    read(14,*)
+    do mu=1,norb
+      read(14,*) (t(n,m,mu,nu),nu=1,norb)
+    enddo
+    write(6,*) t(n,m,1,1),t(n,m,1,2)!,t(n,m,1,3)
+    write(6,*) t(n,m,2,1),t(n,m,2,2)!,t(n,m,2,3)
+    !write(6,*) t(n,m,3,1),t(n,m,3,2)!,t(n,m,3,3)
+    read(14,*)
+    do mu=1,norb
+      read(14,*) (delta(n,m,mu,nu),nu=1,norb)
+    enddo
+    read(14,*)
+  enddo
+  enddo
 
 
   do n=1,ntypes
   do m=1,n-1
-        do mu=1,norb
-        do nu=1,norb
-                t(n,m,mu,nu)=t(m,n,nu,mu)
-                delta(n,m,mu,nu)=delta(m,n,nu,mu)
-        enddo
-        enddo
+     do mu=1,norb
+     do nu=1,norb
+          t(n,m,mu,nu)=t(m,n,nu,mu)
+          delta(n,m,mu,nu)=delta(m,n,nu,mu)
+     enddo
+     enddo
   enddo
   enddo
 

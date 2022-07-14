@@ -95,8 +95,6 @@
             do nu=1,norb ! Don't have oxygen vacancy sites arranged
               if((nt1.eq.2.or.nt1.eq.4).and.(nt2.eq.2.or.nt2.eq.4).and.mu.eq.nu.and.mu.eq.1) then ! oxygen (px <=> py) (Copper pointing)
                 hamilt(i,nn,mu,nu,1)= -sign(1.0d0,rxij*ryij)*t(nt1,nt2,mu,nu) + delta(nt1,nt2,mu,nu)
-              else if((nt1.eq.2.or.nt1.eq.4).and.(nt2.eq.2.or.nt2.eq.4).and.mu.eq.nu.and.mu.eq.2) then ! oxygen (px <=> py) (Perp to copper)
-                hamilt(i,nn,mu,nu,1)= -sign(1.0d0,rxij*ryij)*t(nt1,nt2,mu,nu) + delta(nt1,nt2,mu,nu)
               else if ((nt1.eq.1.or.nt1.eq.3).and.(nt2.eq.2.or.nt2.eq.4)) then ! Hopping between oxygen and copper 1
                 ! i =copper, j = oxygen
                 if (abs(rxij).gt.abs(ryij)) then

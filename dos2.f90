@@ -24,7 +24,7 @@ subroutine dos2 (eigup,eigdown,hmatup,ntype,num_elec,numstates,ND)
       if(ev.gt.Eblow.and.ev.le.Ebhigh)then
         dos(ien,1)=dos(ien,1)+1.d0
         do n=1,numstates ! No support vacancy now
-          if (ntype(mod(n-1,ND) + 1).eq.1) then
+          if (ntype(n).eq.1) then
             dos(ien,2) = dos(ien,2) + hmatup(n,ie)**2
           else
             dos(ien,3) = dos(ien,3) + hmatup(n,ie)**2

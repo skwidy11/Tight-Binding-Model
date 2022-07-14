@@ -12,8 +12,6 @@ subroutine diagonalize(hamilt, neighb, ND, norb, ntype, fermi, eigup, eigdown,no
   integer, dimension(ND,0:NZ+1) :: neighb
   integer, dimension(ND) :: ntype
 
-
-  numstates = ND+ND*2/3
   hmatup = 0.0d0
   hmatdown = 0.0d0
 
@@ -21,20 +19,16 @@ subroutine diagonalize(hamilt, neighb, ND, norb, ntype, fermi, eigup, eigdown,no
 !
   do n = 1, ND
   do j = 1,neighb(n,0)
-    do mu=1,2
-    do nu=1,2
-      nt1 = ntype(n)
-      nt2 = ntype(neighb(n,j))
-      if(.not.((nt1.eq.1.or.nt1.eq.3).and.mu.eq.2)) then ! Copper only has one orbital
-      if(.not.((nt2.eq.1.or.nt2.eq.3).and.nu.eq.2)) then
-      dum1 = n + (mu-1)*ND
-      dum2 = neighb(n,j) + (nu-1)*ND
-      hmatup(dum1,dum2) = hamilt(n,j,mu,nu,1)
-      hmatup(dum2,dum1) = hmatup(dum1,dum2)
+    do mu=1,norb-1
+    do nu=1,norb-1
+      !nt1 = ntype(n)
+      !nt2 = ntype(neighb(n,j))
+      dum1 = n
+      dum2 = neighb(n,j)
+      hmatup(dum1,dum2)   = hamilt(n,j,mu,nu,1)
+      hmatup(dum2,dum1)   = hmatup(dum1,dum2)
       hmatdown(dum1,dum2) = hamilt(n,j,mu,nu,2)
       hmatdown(dum2,dum1) = hmatdown(dum1,dum2)
-      end if
-      end if
     end do
     end do
     !dum1 = n + 2880
