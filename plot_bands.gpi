@@ -1,0 +1,29 @@
+#set terminal postscript
+#set output "bands.png"
+set term 'wxt'
+unset key
+set pointsize 1
+unset xtics
+#set title "Filled"
+set xtics ("{/Symbol G}" 1, "X" 15, "M" 30, "{/Symbol G}" 45)
+#set xtics ("{/Symbol G}" 1, "X" 101, "X'" 201, "{/Symbol G}" 301)
+set xtics font ",15"
+set ytics font ",13"
+set xrange [1:45]
+set yrange [-4.5:3]
+set size square 1,1
+#set style rect back fc rgb "green" fs solid
+#set obj rect from 0,-4.2 to 101,3
+#set style rect back fc rgb "red" fs solid
+#set obj rect from 201,-4.2 to 300,3
+#set arrow from 101,-4.2 to 101,3 nohead lw 2 dt 2
+#set arrow from 251,-4.2 to 251,3 nohead lw 2 dt 2
+plot "bands.dat" u 1:4  w l lc rgb 'black', "bands.dat" u 1:5  w l lc rgb 'black', "bands.dat" u 1:6  w l lc rgb 'black'\
+    ,"bands.dat" u 1:7  w l lc rgb 'black', "bands.dat" u 1:8  w l lc rgb 'black', "bands.dat" u 1:9  w l lc rgb 'black'\
+    ,"bands.dat" u 1:10 w l lc rgb 'black', "bands.dat" u 1:11 w l lc rgb 'black', "bands.dat" u 1:12 w l lc rgb 'black'\
+    ,"bands.dat" u 1:13 w l lc rgb 'black', "bands.dat" u 1:14 w l lc rgb 'black', "bands.dat" u 1:15 w l lc rgb 'black'\
+    ,"bands.dat" u 1:16 w l lc rgb 'black', "bands.dat" u 1:17 w l lc rgb 'black', "bands.dat" u 1:18 w l lc rgb 'black'\
+    ,"bands.dat" u 1:19 w l lc rgb 'black', "bands.dat" u 1:20 w l lc rgb 'black', "bands.dat" u 1:21 w l lc rgb 'black'\
+    ,"bands.dat" u 1:22 w l lc rgb 'black', "bands.dat" u 1:23 w l lc rgb 'black'
+    #, 1.33 lc rgb 'red'
+pause -1 "Press enter to continue"

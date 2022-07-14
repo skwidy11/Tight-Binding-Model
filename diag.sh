@@ -1,0 +1,1 @@
+gfortran dos_evolve.f90 -L$HOME/libf77/$ARCH -llapack -lblas
