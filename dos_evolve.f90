@@ -216,8 +216,7 @@
 
     print *, "Cu Old: ", nocc_old(a_cu_site,1),nocc_old(a_cu_site,2), "New: ",nocc(a_cu_site,1),nocc(a_cu_site,2)
 
-    print *, "Cu Old: ", nocc_old(289,1),nocc_old(289,2), "New: ",nocc(289,1),nocc(289,2)
-    print *, "Cu Old: ", nocc_old(290,1),nocc_old(301,2), "New: ",nocc(290,1),nocc(301,2)
+    print *, "Cu Old: ", nocc_old(1212,1),nocc_old(1212,2), "New: ",nocc(1212,1),nocc(1212,2)
     !print *, "CuVac Old: ", nocc_old(CupVac,1),nocc_old(CupVac,2), "New: ",nocc(CupVac,1),nocc(CupVac,2)
     print *, "Oxy Old: ", nocc_old(112,1),nocc_old(112,2), "New: ",nocc(112,1),nocc(112,2)
     !print *, "OxyVac Old: ", nocc_old(OxyVac,1),nocc_old(OxyVac,2), "New: ",nocc(OxyVac,1),nocc(OxyVac,2)
