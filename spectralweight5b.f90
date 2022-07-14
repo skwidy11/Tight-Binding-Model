@@ -12,7 +12,7 @@ subroutine spectral_weight(ef,eigup,eigdown,hmatup,hmatdown,sx,sy,numstates,ND,n
       double precision ::sx(ND),sy(ND)
       integer :: ikx, iky,ix,iy,ie, il,icount, pos
       integer :: ntype(ND)
-      open(7,file='weightatfs')
+      open(7,file='../Data/weightatfs')
       ly = lx
       hx = lx/2
       hy = ly/2

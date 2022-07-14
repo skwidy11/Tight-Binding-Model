@@ -150,8 +150,8 @@
 
 
   nocc = 0.0d0
-  open(unit=43,file='Occup.dat')
-  open(unit=47,file='AntiF.dat')
+  open(unit=43,file='../Data/Occup.dat')
+  open(unit=47,file='../Data/AntiF.dat')
   a_cu_site = ND*2/3 + 50
 
 ! Find a Copper Vac site, oxygen vac site
@@ -248,8 +248,8 @@
     n = n + 1
   end do ! End of Self-consistency
 
-  open(unit=51,file='eigvec')
-  open(unit=52,file='eigval')
+  open(unit=51,file='../Data/eigvec')
+  open(unit=52,file='../Data/eigval')
   do i=1,numstates
     do j=1,numstates
       write(51,*) hmatup(i,j)
@@ -286,7 +286,7 @@
 ! Band Structure
 ! *****************************************************************
 
-  open(unit=11,file='bands.dat')
+  open(unit=11,file='../Data/bands.dat')
   lwork = 660
   cells = 30
   site = a_cu_site ! Chooses a copper site
@@ -349,7 +349,7 @@
   emax=-5.0d0
   doso=0.0d0
   n=0
-  open(unit=34,file='energykvec.dat')
+  open(unit=34,file='../Data/energykvec.dat')
   do ikx=-cells/2,cells/2-1
     do iky=-cells/2,cells/2-1
       emin=-5.0d0-delta_sc
@@ -376,7 +376,7 @@
 
   ! Dos from band struc
   emin=-5.0d0-delta_sc
-  open(unit=3,file='banddos.dat')
+  open(unit=3,file='../Data/banddos.dat')
   do ien=2,runs
     energy=emin+(dfloat(ien)+0.5)*delta_sc
     write(3,*) energy-fermi,doso(ien)

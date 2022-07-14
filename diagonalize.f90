@@ -40,7 +40,7 @@ subroutine diagonalize(hamilt, neighb, ND, norb, ntype, fermi, eigup, eigdown,no
   end do
   end do
 
-  l = 401760
+  l = 107136
   allocate(work(l))
   call dsyev('V','U',numstates,hmatup,numstates,eigup,work,l,info1)
   call dsyev('V','U',numstates,hmatdown,numstates,eigdown,work,l,info2)

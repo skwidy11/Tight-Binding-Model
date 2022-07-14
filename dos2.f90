@@ -5,7 +5,7 @@ subroutine dos2 (eigup,eigdown,hmatup,ntype,num_elec,numstates,ND)
   double precision, dimension(numstates,numstates) :: hmatup
   integer, dimension(1728) :: ntype
   integer :: ien, ie, n,num_elec,runs,numstates,ND
-  open(unit=20,file='dos.dat')
+  open(unit=20,file='../Data/dos.dat')
   runs = 200
   Emax =  5.0d0
   Emin = -5.0d0
